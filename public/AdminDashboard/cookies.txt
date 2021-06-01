@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+.phoenixcoded.net	TRUE	/	FALSE	1999999999	__cfduid	daa3da67bd837a302128cefb92242ffff1591982584
+html.phoenixcoded.net	TRUE	/	FALSE	1999999999	SameSite	Lax
+

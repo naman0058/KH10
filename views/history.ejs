@@ -1,0 +1,798 @@
+
+<%- include ('./header.ejs') %>
+
+<div class="layout-content">
+
+<div class="container-fluid flex-grow-1 container-p-y">
+<h4 class="font-weight-bold py-3 mb-0">Hospital Dashboard</h4>
+<div class="text-muted small mt-0 mb-4 d-block breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="#"><i class="feather icon-home"></i></a></li>
+<li class="breadcrumb-item"><a href="#!">Hospital</a></li>
+<li class="breadcrumb-item active"><a href="#!">Dashboard</a></li>
+</ol>
+</div>
+<div class="row">
+
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-user-md f-36 text-info"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Today's Order</h6>
+<h2 class="m-b-0"><%=result[0][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-user-injured f-36 text-danger"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Remaining Order</h6>
+<h2 class="m-b-0"><%=result[2][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-user-nurse f-36 text-success"></i>
+</div> 
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Complete Order</h6>
+<h2 class="m-b-0"><%=result[3][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-prescription-bottle-alt f-36 text-primary"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Total Order</h6>
+<h2 class="m-b-0"><%=result[4][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- <div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-flask f-36 text-warning"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Today Earning</h6>
+<h2 class="m-b-0"><%=result[5][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div> -->
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-user-tie f-36 text-primary"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Total Customer Balance</h6>
+<h2 class="m-b-0"><%=result[6][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-file-invoice-dollar f-36 text-danger"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Total Store Keeper</h6>
+<h2 class="m-b-0"><%=result[7][0].orders%></h2>
+</div>
+ </div>
+</div>
+</div>
+</div>
+<div class="col-xl-3 col-md-6">
+<div class="card mb-4">
+<div class="card-body">
+<div class="row align-items-center m-l-0">
+<div class="col-auto">
+<i class="fas fa-pills f-36 text-info"></i>
+</div>
+<div class="col-auto">
+<h6 class="text-muted m-b-10">Total Users</h6>
+<h2 class="m-b-0"><%=result[8][0].orders%></h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="layout-content">
+
+  <div class="container-fluid flex-grow-1 container-p-y">
+ 
+  <div class="row">
+  <div class="col-md-12">
+  <div class="card">
+  <div class="card-body">
+  <ul class="nav nav-pills bg-nav-pills nav-justified mb-0">
+  <li class="nav-item">
+  <a href="#billing-information" data-toggle="tab" aria-expanded="false" class="nav-link active">
+  <i class="fas fa-shopping-cart f-18"></i>
+  <span class="d-none d-lg-inline-block m-l-10">Today's Order</span>
+  </a>
+  </li>
+  <li class="nav-item">
+  <a href="#shipping-information" data-toggle="tab" aria-expanded="true" class="nav-link">
+  <i class="fas fa-truck f-18"></i>
+  <span class="d-none d-lg-inline-block m-l-10">Reports</span>
+  </a>
+  </li>
+ 
+  </ul>
+  </div>
+  </div>
+  <div class="tab-content">
+  <div class="tab-pane show active" id="billing-information">
+  <div class="card">
+  <div class="card-header">
+  <h5 class="mb-2">Today's Order</h5>
+  
+  </div>
+  <div class="card-body">
+  <!--  -->
+
+
+  <table id="table" class="table table-bordered table-striped mb-0">
+    <thead>
+    <tr>
+        <th>Product Name</th>
+    <th>Customer Name</th>
+    <th>Number</th>
+    <th>Status</th>
+    <th>Address</th>
+    <th>Amount</th>
+    <th>Payment Mode</th>
+    <th>Date</th>
+
+    </tr>
+    </thead>
+    <tbody>
+
+        <% for(i=0;i<result[1].length;i++){ %>
+
+    <tr>
+    
+    <td><%=result[1][i].booking_id%></td>
+    <td><%=result[1][i].name%></td>
+    <td><%=result[1][i].number%></td>
+    <td><%=result[1][i].status%></td>
+    <td><%=result[1][i].address%></td>
+    <td><%=result[1][i].amount%></td>
+    <td><%=result[1][i].payment_mode%></td>
+    <td><%=result[1][i].date%></td>
+    </tr>
+
+    <% } %>
+
+ </tbody>
+    </table>
+
+
+
+  </div>
+  </div>
+  </div>
+  <div class="tab-pane" id="shipping-information">
+  
+  
+      
+  <div class="card">
+  
+    <div class="card-header">
+      <h5 class="mb-2">Personal Details</h5>
+      
+      </div>
+  
+      <div class="card-body">
+       
+
+
+
+ 
+        <div class="form-row">
+          <div class="form-group col-md-6">
+          <label class="form-label">From Date</label>
+          <input type="date" class="form-control" id="from_date"  placeholder="Category Name" name="name" required>
+          <div class="clearfix"></div>
+          </div>
+          <div class="form-group col-md-6">
+          <label class="form-label">To Date</label>
+          <input type="date" class="form-control" id="to_date" name='image'>
+          <div class="clearfix"></div>
+          </div>
+          </div>
+          
+          
+          <button type="button" class="btn btn-primary search">Search</button>
+
+
+          <div id="result" style="margin-top: 20px;"></div>
+
+        </div>
+     
+  </div>
+  
+   </div>
+  
+  </div>
+  </div>
+  
+  </div>
+  </div>
+  
+  
+
+  
+  </div>
+  
+  </div>
+  
+  </div>
+  
+ 
+  </div>
+
+
+</div>
+
+
+
+</div>
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+<div class="layout-overlay layout-sidenav-toggle"></div>
+</div>
+
+<div class="modal fade" id="modal-report" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-xl">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Modal title</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<div class="table-responsive">
+<table id="report-table" class="table table-bordered table-striped mb-0">
+<thead>
+<tr>
+<th>Image</th>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Sex</th>
+<th>Birth Date</th>
+<th>Age</th>
+<th>Blood Group</th>
+<th>Options</th>
+</tr>
+</thead>
+ <tbody>
+<tr>
+<td><img src="/assets/img/user/avatar-1.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="fd8d9c8994989389bd98859c908d9198d39e9290">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-2.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b1134283e2b331b3e233a362b373e75383436">[email&#160;protected]</a></td>
+<td>1234567</td>
+<td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-3.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cabaabbea3afa4be8aafb2aba7baa6afe4a9a5a7">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-4.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bd1f4e8feebf3dbfee3faf6ebf7feb5f8f4f6">[email&#160;protected]</a></td>
+<td>1234567</td>
+<td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-1.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3949584d505c574d795c41585449555c175a5654">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+ <a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-2.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="460c293523362e06233e272b362a236825292b">[email&#160;protected]</a></td>
+<td>1234567</td>
+<td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-3.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d0a0b1a4b9b5bea490b5a8b1bda0bcb5feb3bfbd">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-4.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="de94b1adbbaeb69ebba6bfb3aeb2bbf0bdb1b3">[email&#160;protected]</a></td>
+<td>1234567</td>
+<td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-1.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d9a9b8adb0bcb7ad99bca1b8b4a9b5bcf7bab6b4">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-2.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e54716d7b6e765e7b667f736e727b307d7173">[email&#160;protected]</a></td>
+<td>1234567</td>
+ <td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-3.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Tanvir Hasan</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="572736233e32392317322f363a273b327934383a">[email&#160;protected]</a></td>
+<td>9876543</td>
+<td>female</td>
+<td>13/09/1994</td>
+<td>54</td>
+<td>o+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+<tr>
+<td><img src="/assets/img/user/avatar-4.jpg" class="img-radius" width="30px" height="30px"></td>
+<td>Joseph William</td>
+<td><a href="http://html.phoenixcoded.net/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="440e2b3721342c04213c25293428216a272b29">[email&#160;protected]</a></td>
+<td>1234567</td>
+<td>male</td>
+<td>09/10/1990</td>
+<td>27</td>
+<td>B+</td>
+<td>
+<a href="#!" class="btn btn-info btn-sm">Edit</a>
+<a href="#!" class="btn btn-danger btn-sm">Delete</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/assets/js/pace.js"></script>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/libs/popper/popper.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script src="/assets/js/sidenav.js"></script>
+<script src="/assets/js/layout-helpers.js"></script>
+<script src="/assets/js/material-ripple.js"></script>
+
+<script src="/assets/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="/assets/libs/apexcharts/apexcharts.min.js"></script>
+<script src="/assets/libs/datatables/datatables.js"></script>
+
+<script src="/assets/js/demo.js"></script>
+<script>
+        // report model start
+        $('#modal-report').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var recipient = button.data('title')
+            var modal = $(this)
+            modal.find('.modal-title').text('Report of ' + recipient + ' on current month')
+        })
+        // report model end
+        // DataTable start
+        $('#report-table').DataTable();
+        // DataTable end
+        // [ operation-processed ] start
+        $(function() {
+            var options = {
+                chart: {
+                    type: 'area',
+                    height: 50,
+                    sparkline: {
+                        enabled: true
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ["#ff4a00"],
+                fill: {
+                    type: 'solid',
+                    opacity: 0.3,
+                },
+                markers: {
+                    size: 3,
+                    opacity: 0.9,
+                    colors: "#fff",
+                    strokeColor: "#ff4a00",
+                    strokeWidth: 2,
+                    hover: {
+                        size: 7,
+                    }
+                },
+                stroke: {
+                    curve: 'straight',
+                    width: 3,
+                },
+                series: [{
+                    name: 'series1',
+                    data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54, 25, 66, 41, 89, 63, 54, 25, 66, 41, 89]
+                }],
+                tooltip: {
+                    fixed: {
+                        enabled: false
+                    },
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function(seriesName) {
+                                return 'Operation '
+                            }
+                        }
+                    },
+                    marker: {
+                        show: false
+                    }
+                }
+            };
+            var chart = new ApexCharts(document.querySelector("#operation-chart"), options);
+            chart.render();
+        });
+        // [ operation-processed ] end
+        // [ death-processed ] start
+        $(function() {
+            var options = {
+                chart: {
+                    type: 'area',
+                    height: 50,
+                    sparkline: {
+                        enabled: true
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ["#62d493"],
+                fill: {
+                    type: 'solid',
+                    opacity: 0.3,
+                },
+                markers: {
+                    size: 3,
+                    opacity: 0.9,
+                    colors: "#fff",
+                    strokeColor: "#62d493",
+                    strokeWidth: 2,
+                    hover: {
+                        size: 7,
+                    }
+                },
+                stroke: {
+                    curve: 'straight',
+                    width: 3,
+                },
+                series: [{
+                    name: 'series1',
+                    data: [9, 54, 25, 66, 41, 89, 63, 54, 25, 66, 41, 89, 63, 25, 44, 12, 36, 25, 66, 41, 89]
+                }],
+                tooltip: {
+                    fixed: {
+                        enabled: false
+                    },
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function(seriesName) {
+                                return 'Death '
+                            }
+                        }
+                    },
+                    marker: {
+                        show: false
+                    }
+                }
+            };
+            var chart = new ApexCharts(document.querySelector("#death-chart"), options);
+            chart.render();
+        });
+        // [ death-processed ] end
+        // [ Birth-processed ] start
+        $(function() {
+            var options = {
+                chart: {
+                    type: 'area',
+                    height: 50,
+                    sparkline: {
+                        enabled: true
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ["#FF4961"],
+                fill: {
+                    type: 'solid',
+                    opacity: 0.3,
+                },
+                markers: {
+                    size: 3,
+                    opacity: 0.9,
+                    colors: "#fff",
+                    strokeColor: "#FF4961",
+                    strokeWidth: 2,
+                    hover: {
+                        size: 7,
+                    }
+                },
+                stroke: {
+                    curve: 'straight',
+                    width: 3,
+                },
+                series: [{
+                    name: 'series1',
+                    data: [25, 66, 41, 89, 63, 25, 44, 12, 36, 9, 54, 25, 66, 41, 89, 63, 54, 25, 66, 41, 89]
+                }],
+                tooltip: {
+                    fixed: {
+                        enabled: false
+                    },
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function(seriesName) {
+                                return 'Birth '
+                            }
+                        }
+                    },
+                    marker: {
+                        show: false
+                    }
+                }
+            };
+            var chart = new ApexCharts(document.querySelector("#birth-chart"), options);
+            chart.render();
+        });
+        // [ Birth-processed ] end
+    </script>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/javascipts/jquery.js"></script>
+<script>
+  $('.search').click(function(){
+
+
+if( $('#from_date').val()==[] || $('#form_date').val() == '' ) alert('Select From Date')
+else if( $('#to_date').val() == [] || $('#to_date').val() =='' ) alert('Select To Date')
+else {
+  let from_date = $('#from_date').val();
+  let to_date = $('#to_date').val();
+  $.getJSON('/admin/pannel/history/search',{from_date,to_date},data=>{
+  
+    makeTable(data)
+  })
+}
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function makeTable(categories){
+      let table = ` <div class="table-responsive">
+
+      
+<table id="report-table" class="table table-bordered table-striped mb-0">
+<thead>
+<tr>
+<th>User Name</th>
+<th>User Number</th>
+<th>User Address</th>
+<th>Order Details</th>
+<th>Status</th>     
+<th>Payment Mode</th>
+<th>Amount</th>
+<th>Venor's Details</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>`
+
+$.each(categories,(i,item)=>{
+table+=`<tr>
+
+<td>${item.name}</td>
+<td>${item.number}</td>
+<td>${item.address}</td>
+<td>${item.booking_id}</td>
+<td>${item.status}</td>
+<td>${item.payment_mode}</td>
+<td>${item.amount}</td>
+<td>${item.vendorname}</td>
+<td>${item.date}</td>
+
+</tr>`
+})
+table+=`</tbody>
+</table>
+</div>
+
+    
+  <!-- End Row -->`
+      $('#result').html(table)
+      $('#insertdiv').hide()
+      $('#result').show()
+}
+
+
+
+
+
+
+</script>
+
+<!-- Mirrored from html.phoenixcoded.net/empire/bootstrap/default/hospital-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jun 2020 17:34:54 GMT -->
+</html>
