@@ -168,7 +168,7 @@ router.get('/refund-policy',(req,res)=>{
 let data2 = []
 
 
-router.get('/get-product-details',(req,res)=>{
+router.post('/get-product-details',(req,res)=>{
 
      
     let data1 = []
@@ -183,10 +183,14 @@ router.get('/get-product-details',(req,res)=>{
        let j = i
        let length = result.length
        let title = result[i].name
+       let image = result[i].image
+       let status = result[i].status
+       let quantity = result[i].quantity
+       let price = result[i].price
        let productid = result[i].id
       //  let subcategoryid = result[i].subcategoryid
 
- console.log('original',categoryid)
+ console.log('original',productid)
 
        
        pool.query(`select * from menu_manage where productid = '${productid}' `,(err,response)=>{
@@ -196,7 +200,7 @@ router.get('/get-product-details',(req,res)=>{
 
 
 // console.log(j)
-   data2.push({Title:title,data:response})
+   data2.push({Title:title,image,status,quantity,price,data:response})
  
     // console.log('dfgfdfffff',data2)
     // res.json(data2)
