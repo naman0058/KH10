@@ -186,7 +186,6 @@ router.post('/',(req,res)=>{
  
     var query = `select c.*,(select s.name from services s where s.id = c.booking_id) as servicename
     ,(select s.image from services s where s.id = c.booking_id) as productlogo
-    ,(select s.weight from services s where s.id = c.booking_id) as productweight
     from cart c where c.usernumber = '${req.body.usernumber}';`
     var query1 = `select count(id) as counter from cart where usernumber = '${req.body.usernumber}';`
     var query2 = `select sum(price) as total_ammount from ${table}  where usernumber = '${req.body.usernumber}'; `
