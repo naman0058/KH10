@@ -1,18 +1,14 @@
 let categories = []
 let subcategories = []
-let services = []
 
 
-let table = '/admin/pannel/services'
+let table = '/admin/pannel/services/menu'
 
 $('#show').click(function(){
   
 $.getJSON(`${table}/all`, data => {
-    console.log(data)
-    services = data
+    subcategories = data
     makeTable(data)
-
-
     
   
 })
@@ -20,24 +16,13 @@ $.getJSON(`${table}/all`, data => {
 })
 
 
-$.getJSON(`/admin/pannel/category/all`, data => {
+
+
+$.getJSON(`/admin/pannel/services/all`, data => {
     categories = data
     fillDropDown('categoryid', data, 'Choose Category', 0)
   
 })
-
-
-
-$.getJSON(`/admin/pannel/subcategory/all`, data => {
-    subcategories = data
-    fillDropDown('subcategoryid', [], 'Choose Subcategory', 0)
-})
-
-$('#categoryid').change(() => {
-    const filteredData = subcategories.filter(item => item.categoryid == $('#categoryid').val())
-    fillDropDown('subcategoryid', filteredData, 'Choose Subcategory', 0)
-})
-
 
 
 function fillDropDown(id, data, label, selectedid = 0) {
@@ -62,12 +47,9 @@ function makeTable(categories){
 <table id="report-table" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
-<th>Image</th>
-<th>Category Name</th>
-<th>Name</th>
+<th>Product Name</th>
+<th>Quantity</th>
 <th>Price</th>
-<th>Weight</th>
-<th>Availablity</th>
 <th>Options</th>
 </tr>
 </thead>
@@ -75,19 +57,13 @@ function makeTable(categories){
 
 $.each(categories,(i,item)=>{
 table+=`<tr>
-<td>
-<img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
-</td>
 
-<td>${item.categoryname}</td>
-    
-<td>${item.name}</td>
+<td>${item.productname}</td>
+<td>${item.quantity}</td>
 <td>${item.price}</td>
-<td>${item.weight}</td>
-<td>${item.status}</td>
+
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
-<a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
 </td>
 </tr>`
@@ -113,29 +89,16 @@ $('#result').on('click', '.deleted', function() {
 
 
 
-$('#pcategoryid').change(() => {
-    const filteredData = subcategories.filter(item => item.categoryid == $('#pcategoryid').val())
-    fillDropDown('psubcategoryid', filteredData, 'Choose Sub-Category', 0)
-})
-
-
-
 $('#result').on('click', '.edits', function() {
     const id = $(this).attr('id')
-    const result = services.find(item => item.id == id);
+    const result = subcategories.find(item => item.id == id);
     fillDropDown('pcategoryid', categories, 'Choose Category', result.categoryid)
-    $('#psubcategoryid').append($('<option>').val(result.subcategoryid).text(result.subcategoryname))
- 
     $('#editdiv').show()
     $('#result').hide()
     $('#insertdiv').hide() 
     $('#pid').val(result.id)
-     $('#pname').val(result.name)
-     $('#pcategoryid').val(result.categoryid)
-     $('#psubcategoryid').val(result.subcategoryid)
      $('#pprice').val(result.price)
-     $('#pdiscount').val(result.discount)
-     $('#pweight').val(result.weight)
+     $('#pquantity').val(result.quantity)
    
  })
 
@@ -145,7 +108,7 @@ $('#result').on('click', '.edits', function() {
     const id = $(this).attr('id')
     
 
-    const result = services.find(item => item.id == id);
+    const result = subcategories.find(item => item.id == id);
     $('#peid').val(result.id)
 })
 
@@ -155,19 +118,28 @@ $('#result').on('click', '.edits', function() {
 $('#update').click(function(){  //data insert in database
     let updateobj = {
         id: $('#pid').val(),
-        name: $('#pname').val(),
-        categoryid:$('#pcategoryid').val(),
-       // subcategoryid:$('#psubcategoryid').val(),
-        name:$('#pname').val(),
+        quantity: $('#pquantity').val(),
         price:$('#pprice').val(),
-        status:$('#pstatus').val(),
-        weight:$('#pweight').val(),
-
        
         }
 
     $.post(`${table}/update`, updateobj , function(data) {
        update()
+    })
+})
+
+
+
+$('#submit').click(function(){  //data insert in database
+    let updateobj = {
+        productid: $('#categoryid').val(),
+        quantity: $('#quantity').val(),
+        price:$('#price').val(),
+       
+        }
+
+    $.post(`${table}/insert`, updateobj , function(data) {
+       alert('Successfully Added')
     })
 })
 

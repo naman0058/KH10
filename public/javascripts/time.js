@@ -1,59 +1,17 @@
 let categories = []
-let subcategories = []
-let services = []
 
-
-let table = '/admin/pannel/services'
+let table = 'time-slot'
 
 $('#show').click(function(){
   
 $.getJSON(`${table}/all`, data => {
-    console.log(data)
-    services = data
+    categories = data
     makeTable(data)
-
-
     
   
 })
 
 })
-
-
-$.getJSON(`/admin/pannel/category/all`, data => {
-    categories = data
-    fillDropDown('categoryid', data, 'Choose Category', 0)
-  
-})
-
-
-
-$.getJSON(`/admin/pannel/subcategory/all`, data => {
-    subcategories = data
-    fillDropDown('subcategoryid', [], 'Choose Subcategory', 0)
-})
-
-$('#categoryid').change(() => {
-    const filteredData = subcategories.filter(item => item.categoryid == $('#categoryid').val())
-    fillDropDown('subcategoryid', filteredData, 'Choose Subcategory', 0)
-})
-
-
-
-function fillDropDown(id, data, label, selectedid = 0) {
-    $(`#${id}`).empty()
-    $(`#${id}`).append($('<option>').val("null").text(label))
-
-    $.each(data, (i, item) => {
-        if (item.id == selectedid) {
-            $(`#${id}`).append($('<option selected>').val(item.id).text(item.name))
-        } else {
-            $(`#${id}`).append($('<option>').val(item.id).text(item.name))
-        }
-    })
-}
-
-
 
 function makeTable(categories){
       let table = ` <div class="table-responsive">
@@ -62,32 +20,24 @@ function makeTable(categories){
 <table id="report-table" class="table table-bordered table-striped mb-0">
 <thead>
 <tr>
-<th>Image</th>
-<th>Category Name</th>
-<th>Name</th>
-<th>Price</th>
-<th>Weight</th>
-<th>Availablity</th>
-<th>Options</th>
+<th>Date</th>
+<th>Time</th>
+<th>Status</th>
+
+<th>Action</th>
 </tr>
 </thead>
 <tbody>`
 
 $.each(categories,(i,item)=>{
 table+=`<tr>
-<td>
-<img src="/images/${item.image}" class="img-fluid img-radius wid-40" alt="" style="width:50px;height:50px">
-</td>
 
-<td>${item.categoryname}</td>
-    
-<td>${item.name}</td>
-<td>${item.price}</td>
-<td>${item.weight}</td>
+<td>${item.date}</td>
+<td>${item.time}</td>
 <td>${item.status}</td>
+
 <td>
 <a href="#!" class="btn btn-info btn-sm edits" id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit </a>
-<a href="#!" class="btn btn-info btn-sm updateimage"  id="${item.id}"><i class="feather icon-edit"></i>&nbsp;Edit Image </a>
 <a href="#!" class="btn btn-danger btn-sm deleted" id="${item.id}"><i class="feather icon-trash-2"></i>&nbsp;Delete </a>
 </td>
 </tr>`
@@ -113,29 +63,19 @@ $('#result').on('click', '.deleted', function() {
 
 
 
-$('#pcategoryid').change(() => {
-    const filteredData = subcategories.filter(item => item.categoryid == $('#pcategoryid').val())
-    fillDropDown('psubcategoryid', filteredData, 'Choose Sub-Category', 0)
-})
-
-
-
 $('#result').on('click', '.edits', function() {
     const id = $(this).attr('id')
-    const result = services.find(item => item.id == id);
-    fillDropDown('pcategoryid', categories, 'Choose Category', result.categoryid)
-    $('#psubcategoryid').append($('<option>').val(result.subcategoryid).text(result.subcategoryname))
- 
+    const result = categories.find(item => item.id == id);
+  
     $('#editdiv').show()
     $('#result').hide()
     $('#insertdiv').hide() 
     $('#pid').val(result.id)
-     $('#pname').val(result.name)
-     $('#pcategoryid').val(result.categoryid)
-     $('#psubcategoryid').val(result.subcategoryid)
-     $('#pprice').val(result.price)
-     $('#pdiscount').val(result.discount)
-     $('#pweight').val(result.weight)
+     $('#pdate').val(result.date)
+     $('#ptime').val(result.time)
+     $('#pstatus').val(result.status)
+    
+
    
  })
 
@@ -143,9 +83,7 @@ $('#result').on('click', '.edits', function() {
 
  $('#result').on('click', '.updateimage', function() {
     const id = $(this).attr('id')
-    
-
-    const result = services.find(item => item.id == id);
+    const result = categories.find(item => item.id == id);
     $('#peid').val(result.id)
 })
 
@@ -155,14 +93,10 @@ $('#result').on('click', '.edits', function() {
 $('#update').click(function(){  //data insert in database
     let updateobj = {
         id: $('#pid').val(),
-        name: $('#pname').val(),
-        categoryid:$('#pcategoryid').val(),
-       // subcategoryid:$('#psubcategoryid').val(),
-        name:$('#pname').val(),
-        price:$('#pprice').val(),
+        date: $('#pdate').val(),
+        time:$('#ptime').val(),
         status:$('#pstatus').val(),
-        weight:$('#pweight').val(),
-
+       
        
         }
 

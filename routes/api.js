@@ -154,4 +154,105 @@ router.post("/get-payment-details-by-scan", (req, res) => {
   );
 });
 
+
+
+
+let data2 = []
+
+
+router.get('/index',(req,res)=>{
+
+     
+    let data1 = []
+  
+    
+    pool.query(`select * from category`,(err,result)=>{
+        if(err) throw err;
+        else {
+    //  console.log(result.length)
+    
+   for( i=0;i<result.length;i++){
+       let j = i
+       let length = result.length
+       let title = result[i].name
+       let categoryid = result[i].id
+      //  let subcategoryid = result[i].subcategoryid
+
+ console.log('original',categoryid)
+
+       
+       pool.query(`select * from subcategory where categoryid = '${categoryid}' `,(err,response)=>{
+           if(err) throw err;
+           else {
+  
+
+
+// console.log(j)
+   data2.push({Title:title,data:response})
+ 
+    // console.log('dfgfdfffff',data2)
+    // res.json(data2)
+
+
+
+           
+           }
+
+        //    console.log('fgy',response[0])
+           
+
+
+       })
+     
+   }
+//    console.log('finaltime',data2)
+   res.json(data2)
+   data2 = []
+
+        }
+    })
+
+})
+
+
+
+
+
+router.get('/time',(req,res)=>{
+  pool.query(`select * from time where date>= CURDATE()`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+  })
+})
+
+
+
+
+
+router.get('/get-address',(req,res)=>{
+  pool.query(`select * from address where usernumber = '${req.query.usernumber}'`,(err,result)=>{
+      if(err) throw err;
+      else res.json(result)
+  })
+})
+
+
+
+router.post('/save-address',(req,res)=>{
+  let body = req.body;
+  console.log('body h',req.body)
+  pool.query(`insert into address set ?`,body,(err,result)=>{
+      if(err) throw err;
+      else res.json({
+          msg : 'success'
+      })
+  })
+})
+
+
+
+
+
+
+
 module.exports = router;

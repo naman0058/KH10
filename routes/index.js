@@ -157,4 +157,75 @@ router.get('/refund-policy',(req,res)=>{
   res.render('refund')
 })
 
+
+
+
+
+
+
+
+
+let data2 = []
+
+
+router.get('/get-product-details',(req,res)=>{
+
+     
+    let data1 = []
+  
+    
+    pool.query(`select * from services where subcategoryid = '${req.body.subcategoryid}'`,(err,result)=>{
+        if(err) throw err;
+        else {
+    //  console.log(result.length)
+    
+   for( i=0;i<result.length;i++){
+       let j = i
+       let length = result.length
+       let title = result[i].name
+       let productid = result[i].id
+      //  let subcategoryid = result[i].subcategoryid
+
+ console.log('original',categoryid)
+
+       
+       pool.query(`select * from menu_manage where productid = '${productid}' `,(err,response)=>{
+           if(err) throw err;
+           else {
+  
+
+
+// console.log(j)
+   data2.push({Title:title,data:response})
+ 
+    // console.log('dfgfdfffff',data2)
+    // res.json(data2)
+
+
+
+           
+           }
+
+        //    console.log('fgy',response[0])
+           
+
+
+       })
+     
+   }
+//    console.log('finaltime',data2)
+   res.json(data2)
+   data2 = []
+
+        }
+    })
+
+})
+
+
+
+
+
+
+
 module.exports = router;

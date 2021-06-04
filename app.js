@@ -20,7 +20,8 @@ var delievery_boy = require('./routes/delieveryBoy')
 var partner_api = require('./routes/partner_api');
 var history = require('./routes/history');
 var banner_image = require('./routes/banner_image')
-var api = require('./routes/api')
+var api = require('./routes/api');
+var timeslot = require('./routes/timeslot');
 
 
 var app = express();
@@ -61,6 +62,8 @@ app.use('/admin/pannel/delieveryBoy',delievery_boy)
 app.use('/partner-api',partner_api);
 app.use('/admin/pannel/history',history);
 app.use('/admin/pannel/banner-image',banner_image);
+app.use('/time-slot',timeslot);
+
 app.use('/api',api);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

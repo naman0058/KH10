@@ -2,7 +2,7 @@ let categories = []
 let subcategories = []
 
 
-let table = 'subcategory'
+let table = '/admin/pannel/subcategory'
 
 $('#show').click(function(){
   
