@@ -188,6 +188,7 @@ router.post('/get-product-details',(req,res)=>{
        let quantity = result[i].quantity
        let price = result[i].price
        let productid = result[i].id
+       let id = result[i].id
       //  let subcategoryid = result[i].subcategoryid
 
  console.log('original',productid)
@@ -200,7 +201,7 @@ router.post('/get-product-details',(req,res)=>{
 
 
 // console.log(j)
-   data2.push({Title:title,image,status,quantity,price,data:response})
+   data2.push({Title:title,image,status,quantity,price,id,data:response})
  
     // console.log('dfgfdfffff',data2)
     // res.json(data2)
