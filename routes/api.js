@@ -6,6 +6,7 @@ var table = "category";
 const fs = require("fs");
 
 const fetch = require("node-fetch");
+const { SSL_OP_EPHEMERAL_RSA } = require("constants");
 
 router.post("/payment-initiate", (req, res) => {
   const url = `https://rzp_live_v8MtbgfDg2yTk1:95607TlOfi8LnbKoxWPcFMHp@api.razorpay.com/v1/orders/`;
@@ -251,6 +252,51 @@ router.post('/save-address',(req,res)=>{
 
 
 
+
+router.post('/save-wishlist',(req,res)=>{
+  let body = req.body;
+  console.log('body h',req.body)
+  pool.query(`insert into wishlist set ?`,body,(err,result)=>{
+      if(err) throw err;
+      else res.json({
+          msg : 'success'
+      })
+  })
+})
+
+
+
+
+let wishlistdata = []
+
+
+
+router.post('/mywishlist',(req,res)=>{
+  let body = req.body;
+  console.log('body h',req.body)
+  pool.query(`select * from wishlist where usernumber = '${req.body.number}'`,(err,result)=>{
+      if(err) throw err;
+      else {
+
+        for(i=0;i<result.length;i++){
+   let booking_id = result[i].booking_id
+   console.log(booking_id)
+
+pool.query(`select * from services where id = '${booking_id}'`,(err,response)=>{
+  if(err) throw err;
+  wishlistdata.push(response)
+
+})
+
+
+        }
+
+        res.json(wishlistdata)
+        wishlistdata = []
+
+      }
+  })
+})
 
 
 

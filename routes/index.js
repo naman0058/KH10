@@ -174,7 +174,10 @@ router.post('/get-product-details',(req,res)=>{
     let data1 = []
   
     
-    pool.query(`select * from services where subcategoryid = '${req.body.subcategoryid}'`,(err,result)=>{
+    pool.query(`select s.* ,
+    (select c.quantity from cart c where c.booking_id = s.id and c.usernumber = '${req.body.number}' and weight = '${req.body.weight}') as userquantity,
+    (select w.booking_id from wishlist w where w.booking_id = s.id and w.usernumber = '${req.body.number}') as wishlistITem
+    from services s where s.subcategoryid = '${req.body.subcategoryid}'`,(err,result)=>{
         if(err) throw err;
         else {
     //  console.log(result.length)
@@ -189,6 +192,9 @@ router.post('/get-product-details',(req,res)=>{
        let price = result[i].price
        let productid = result[i].id
        let id = result[i].id
+       let userquantity = result[i].userquantity
+       let wishlistITem = result[i].wishlistITem
+
       //  let subcategoryid = result[i].subcategoryid
 
  console.log('original',productid)
@@ -201,7 +207,7 @@ router.post('/get-product-details',(req,res)=>{
 
 
 // console.log(j)
-   data2.push({Title:title,image,status,quantity,price,id,data:response})
+   data2.push({Title:title,image,status,quantity,price,id,userquantity,wishlistITem,data:response})
  
     // console.log('dfgfdfffff',data2)
     // res.json(data2)
