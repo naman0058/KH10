@@ -254,7 +254,7 @@ body['date'] = today
             pool.query(`update users set wallet = wallet - '${req.body.amount}' where number = '${req.body.usernumber}'`,(err,result)=>{
                 if(err) throw err;
                 else {
-                    pool.query(`select * from cart where number = '${req.body.usernumber}'`,(err,result)=>{
+                    pool.query(`select * from cart where usernumber = '${req.body.usernumber}'`,(err,result)=>{
                         if(err) throw err;
                         else {
                  
@@ -290,7 +290,7 @@ body['date'] = today
                      
                  
                  
-                 pool.query(`delete from cart where number = '${req.body.usernumber}'`,(err,result)=>{
+                 pool.query(`delete from cart where usernumber = '${req.body.usernumber}'`,(err,result)=>{
                      if(err) throw err;
                      else {
                          res.json({
