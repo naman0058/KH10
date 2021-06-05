@@ -179,154 +179,13 @@ pool.query(`select wallet from users where number = '${req.body.number}'`,(err,r
     else {
            if((+result[0].wallet) > (+req.body.amount)) {
 
-            pool.query(`select id from ${table} where number = '${req.body.number}'`,(err,result)=>{
-                if(err) {
-                    res.json({
-                        status:500,
-                        type : 'error',
-                        description:err
-                    })
-                }
-                else if(result[0]){
-        
-              pool.query(`update users set wallet = wallet - '${req.body.amount}' where number = '${req.body.number}'`,(err,result)=>{
-                  if(err) throw err;
-                  else {
+            pool.query(`update users set wallet = wallet - '${req.body.amount}' where number = '${req.body.number}'`,(err,result)=>{
+                if(err) throw err;
+                else {
 
-                    pool.query(`insert into ${table} set ?`,body,(err,result)=>{
-                        if(err) {
-                            res.json({
-                                status:500,
-                                type : 'error',
-                                description:err
-                            })
-                        }
-                        else {
-                            request(`http://mysmsshop.in/V2/http-api.php?apikey=gCuJ0RSBDLC3xKj6&senderid=SAFEDI&number=${req.body.number}&message=Hello ${req.body.name} , your order for ${req.body.booking_id} has been placed successfully. &format=json`, { json: true }, (err, result) => {
-                                                    if (err) { return console.log(err); }
-                                                    else {
-        
-                                                        request(`http://mysmsshop.in/V2/http-api.php?apikey=gCuJ0RSBDLC3xKj6&senderid=SAFEDI&number=${req.body.number}&message=Hello ${req.body.name} , your order for ${req.body.booking_id} has been placed successfully. &format=json`, { json: true }, (err, result) => {
-                                                            if (err) { return console.log(err); }
-                                                            else {
-
-                                pool.query(`delete from cart where usernumber = '${req.body.number}'`,(err,result)=>{
-                                    if(err) throw err;
-                                    else {
-
-                                        pool.query(`update vendors set wallet = wallet + ${req.body.partner_wallet} where partner_number = '${req.body.partner_number}'`,(err,result)=>{
-                                            if(err) throw err;
-                                            else {
-                                             res.json({
-                                            status:200,
-                                            type:'success',
-                                            description:'booking success'
-                                        })  
-                                            }
-                                        })
-                                        
-                                    }
-                                })
-
-
-                                                        
-                                                            }  
-                                                        
-                                                    })
-                                                       
-                                            }
-                                                  });
-                        }
-                    })
-                  }
-              })
-        
-                   
-        
-                }
-                else{
-
-                    pool.query(`update users set wallet = wallet - '${req.body.amount}' where number = '${req.body.number}'`,(err,result)=>{
-
-               if(err) throw err;
-               else {
-                pool.query(`insert into ${table} set ?`,body,(err,result)=>{
-                    if(err) {
-                        res.json({
-                            status:500,
-                            type : 'error',
-                            description:err
-                        })
-                    }
-                    else {
-                     pool.query(`select refferal_code from users where number = '${req.body.number}'`,(err,result)=>{
-                         if(err){
-                            res.json({
-                                status:500,
-                                type : 'error',
-                                description:err
-                            })
-                         }
-                         else {
-                             pool.query(`select number from users where unique_code = '${result[0].refferal_code}'`,(err,result)=>{
-                                 if(err) {
-                                    res.json({
-                                        status:500,
-                                        type : 'error',
-                                        description:err
-                                    })
-                                 }
-                                 else {
-                                     pool.query(`update users set wallet = wallet+100 where number = '${result[0].number}'`,(err,result)=>{
-                                         if(err) throw err;
-                                         else {
-                                            request(`http://mysmsshop.in/V2/http-api.php?apikey=gCuJ0RSBDLC3xKj6&senderid=SAFEDI&number=${req.body.number}&message=Hello ${req.body.name} , your order for ${req.body.booking_id} has been placed successfully. &format=json`, { json: true }, (err, result) => {
-                                                if (err) { return console.log(err); }
-                                                else {
-                                                    request(`http://mysmsshop.in/V2/http-api.php?apikey=gCuJ0RSBDLC3xKj6&senderid=SAFEDI&number=${req.body.number}&message=Hello ${req.body.name} , your order for ${req.body.booking_id} has been placed successfully. &format=json`, { json: true }, (err, result) => {
-                                                        if (err) { return console.log(err); }
-                                                        else {
-                                                            pool.query(`delete from cart where usernumber = '${req.body.number}'`,(err,result)=>{
-                                                                if(err) throw err;
-                                                                else {
-
-                                                                    pool.query(`update vendors set wallet = wallet + ${req.body.partner_wallet} where partner_number = '${req.body.partner_number}'`,(err,result)=>{
-                                                                        if(err) throw err;
-                                                                        else {
-                                                                         res.json({
-                                                                        status:200,
-                                                                        type:'success',
-                                                                        description:'booking success'
-                                                                    })  
-                                                                        }
-                                                                    })
-                                                                    
-                                                                }
-                                                            })
-                            
-                                                        }  
-                                                    
-                                                })
-                                                   
-                                        }
-                                              });
-                                         }
-                                     })
-                                 }
-                             })
-                         }
-                     })   
-                      
-                    }
-                })
-               }
-                    })
-        
                  
-        
                 }
             })
-
            }
            else {
                res.json({
@@ -343,6 +202,125 @@ pool.query(`select wallet from users where number = '${req.body.number}'`,(err,r
 
 
 
+
+
+
+
+router.post('/order-now',(req,res)=>{
+    let body = req.body;
+console.log('body',req.body)
+    let cartData = req.body
+
+
+  //  console.log('CardData',cartData)
+
+     body['status'] = 'pending'
+      
+
+    var today = new Date();
+var dd = today.getDate();
+
+var mm = today.getMonth()+1; 
+var yyyy = today.getFullYear();
+if(dd<10) 
+{
+    dd='0'+dd;
+} 
+
+if(mm<10) 
+{
+    mm='0'+mm;
+} 
+today = yyyy+'-'+mm+'-'+dd;
+
+
+body['date'] = today
+
+
+
+    var randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    for ( var i = 0; i < 12; i++ ) {
+        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+    }
+   orderid = result;
+
+
+   pool.query(`select wallet from users where number = '${req.body.usernumber}'`,(err,result)=>{
+    if(err) throw err;
+    else {
+           if((+result[0].wallet) > (+req.body.amount)) {
+
+            pool.query(`update users set wallet = wallet - '${req.body.amount}' where number = '${req.body.usernumber}'`,(err,result)=>{
+                if(err) throw err;
+                else {
+                    pool.query(`select * from cart where number = '${req.body.usernumber}'`,(err,result)=>{
+                        if(err) throw err;
+                        else {
+                 
+                        let data = result
+                 
+                        for(i=0;i<result.length;i++){
+                         data[i].name = req.body.name
+                         data[i].date = today
+                         data[i].orderid = orderid
+                         data[i].status = 'pending'
+                         data[i].number = req.body.number
+                         data[i].usernumber = req.body.usernumber
+                         data[i].payment_mode = 'cash'
+                         data[i].address = req.body.address
+                         data[i].id = null
+                 
+                 
+                        }
+                 
+                 
+                 
+                 for(i=0;i<data.length;i++) {
+                    pool.query(`insert into booking set ?`,data[i],(err,result)=>{
+                            if(err) throw err;
+                            else {
+                 
+                 
+                            }
+                       })
+                 }
+                 
+                 
+                     
+                 
+                 
+                 pool.query(`delete from cart where number = '${req.body.usernumber}'`,(err,result)=>{
+                     if(err) throw err;
+                     else {
+                         res.json({
+                             msg : 'success'
+                         })
+                     }
+                 })
+                 
+                 
+                        }
+                    })
+                 
+                }
+            })
+           }
+           else {
+               res.json({
+                   status : 500,
+                   type:'error',
+                   description:'low balance'
+               })
+           }
+    }
+})
+
+
+  
+
+   
+})
 
 
 router.post('/cash',(req,res)=>{

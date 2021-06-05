@@ -301,4 +301,7 @@ pool.query(`select * from services where id = '${booking_id}'`,(err,response)=>{
 
 
 
+router.post('/')
+
+
 module.exports = router;

@@ -42,8 +42,8 @@ router.post('/',(req,res)=>{
     })
   }
   else if(result[0]) {
-    if(req.body.partner_number==result[0].partner_number){
-      if(req.body.booking_id ==result[0].booking_id){
+    
+      if(req.body.booking_id == result[0].booking_id && req.body.weight == result[0].weight && req.body.usernumber == result[0].nummber )  {
   pool.query(`update ${table} set quantity = quantity+${qua} , price = price+${req.body.price} where booking_id = '${req.body.booking_id}' and usernumber = '${req.body.usernumber}'`,(err,result)=>{
   if(err) {
     res.json({
@@ -79,13 +79,8 @@ router.post('/',(req,res)=>{
         }
       })
     }
-    }
-    else{
-      res.json({
-        msg : 'Can not book two different partner services simultaneously. Replace Cart ?',
-        description : 'failed'
-      })
-    }
+    
+   
   }
   else{
     pool.query(`insert into ${table} set ?`,body,(err,result)=>{
@@ -383,6 +378,12 @@ router.post("/cart-handler", (req, res) => {
   }
 
 })
+
+
+
+
+
+
 
 
 
