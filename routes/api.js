@@ -302,7 +302,7 @@ pool.query(`select * from services where id = '${booking_id}'`,(err,response)=>{
 
 
 router.post('/total-amount',(req,res)=>{
-  pool.query(`select sum(amount) as total_amount from cart where usernumber = '${req.body.number}'`,(err,result)=>{
+  pool.query(`select sum(price) as total_amount from cart where usernumber = '${req.body.number}'`,(err,result)=>{
         if(err) throw err;
         else res.json(result)
   })
