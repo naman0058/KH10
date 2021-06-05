@@ -280,6 +280,7 @@ body['date'] = today
                     pool.query(`insert into booking set ?`,data[i],(err,result)=>{
                             if(err) throw err;
                             else {
+                                console.log(result)
                  
                  
                             }
