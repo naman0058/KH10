@@ -270,6 +270,8 @@ body['date'] = today
                          data[i].payment_mode = 'cash'
                          data[i].address = req.body.address
                          data[i].id = null
+                         data[i].delivery_date = req.body.delivery_date
+                         data[i].delivery_time = req.body.delivery_time
                  
                  
                         }

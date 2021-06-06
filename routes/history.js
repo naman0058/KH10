@@ -10,7 +10,7 @@ const fs = require("fs");
 router.get('/',(req,res)=>{
     if(req.session.adminid){
         var query = `select count(id) as orders from booking where date = CURDATE();`
-        var query8 = `select * from booking where date = CURDATE();`
+        var query8 = `select b.* , (select s.name from services s where s.id = b.booking_id) as bookingname from booking b where b.status = 'pending';`
         var query1 = `select count(id) as orders from booking where status !='completed' and date = CURDATE();`
         var query2 = `select count(id) as orders from booking where status = 'completed' and date = CURDATE();`
         var query3 = `select count(id) as orders from booking;`
@@ -119,6 +119,38 @@ router.post('/update', (req, res) => {
 
 
 
+router.post('/update/status', (req, res) => {
+    pool.query(`update booking set ? where id = ?`, [req.body, req.body.id], (err, result) => {
+        if(err) {
+            res.json({
+                status:500,
+                type : 'error',
+                description:err
+            })
+        }
+        else {
+            res.json({
+                status:200,
+                type : 'success',
+                description:'successfully update'
+            })
+
+            
+        }
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
 
 router.post('/update_image',upload.single('image'), (req, res) => {
     let body = req.body;
@@ -162,7 +194,7 @@ router.post('/update_image',upload.single('image'), (req, res) => {
 
 router.get('/search',(req,res)=>{
     console.log('query',req.query)
-    pool.query(`SELECT b.* , (select v.name from vendors v where v.number = b.partner_number) as vendorname FROM booking b WHERE b.date BETWEEN '${req.query.from_date}' AND '${req.query.to_date}';`,(err,result)=>{
+    pool.query(`SELECT b.* FROM booking b WHERE b.date BETWEEN '${req.query.from_date}' AND '${req.query.to_date}';`,(err,result)=>{
         if(err) throw err;
        
         else {

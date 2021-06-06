@@ -14,7 +14,7 @@
 </div>
 <div class="row">
 
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -29,7 +29,7 @@
 </div>
 </div>
 </div>
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -44,7 +44,7 @@
 </div>
 </div>
 </div>
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -59,7 +59,7 @@
 </div>
 </div>
 </div>
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -89,7 +89,7 @@
 </div>
 </div>
 </div> -->
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -104,22 +104,8 @@
 </div>
 </div>
 </div>
-<div class="col-xl-3 col-md-6">
-<div class="card mb-4">
-<div class="card-body">
-<div class="row align-items-center m-l-0">
-<div class="col-auto">
-<i class="fas fa-file-invoice-dollar f-36 text-danger"></i>
-</div>
-<div class="col-auto">
-<h6 class="text-muted m-b-10">Total Store Keeper</h6>
-<h2 class="m-b-0"><%=result[7][0].orders%></h2>
-</div>
- </div>
-</div>
-</div>
-</div>
-<div class="col-xl-3 col-md-6">
+
+<div class="col-xl-4 col-md-6">
 <div class="card mb-4">
 <div class="card-body">
 <div class="row align-items-center m-l-0">
@@ -158,7 +144,7 @@
   <li class="nav-item">
   <a href="#billing-information" data-toggle="tab" aria-expanded="false" class="nav-link active">
   <i class="fas fa-shopping-cart f-18"></i>
-  <span class="d-none d-lg-inline-block m-l-10">Today's Order</span>
+  <span class="d-none d-lg-inline-block m-l-10">Running Order</span>
   </a>
   </li>
   <li class="nav-item">
@@ -175,7 +161,7 @@
   <div class="tab-pane show active" id="billing-information">
   <div class="card">
   <div class="card-header">
-  <h5 class="mb-2">Today's Order</h5>
+  <h5 class="mb-2">Running Order</h5>
   
   </div>
   <div class="card-body">
@@ -192,7 +178,10 @@
     <th>Address</th>
     <th>Amount</th>
     <th>Payment Mode</th>
+    <th>Quantity</th>
+
     <th>Date</th>
+    <th>Status Change</th>
 
     </tr>
     </thead>
@@ -202,14 +191,18 @@
 
     <tr>
     
-    <td><%=result[1][i].booking_id%></td>
+    <td><%=result[1][i].bookingname%></td>
     <td><%=result[1][i].name%></td>
     <td><%=result[1][i].number%></td>
     <td><%=result[1][i].status%></td>
     <td><%=result[1][i].address%></td>
-    <td><%=result[1][i].amount%></td>
-    <td><%=result[1][i].payment_mode%></td>
+    <td><%=result[1][i].price%></td>
+    <td><%=result[1][i].weight%></td>
+    <td><%=result[1][i].quantity%></td>
+
     <td><%=result[1][i].date%></td>
+    <td><button class="btn btn-primary iscomplete" type="button" id="<%=result[1][i].id%>" >Completed </button></td>
+
     </tr>
 
     <% } %>
@@ -790,6 +783,20 @@ table+=`</tbody>
 
 
 
+
+
+$('.iscomplete').click(function(){
+    var r = confirm("Are you sure you have complete this order ?");
+  if (r == true) {
+   
+  const id = $(this).attr('id')
+  $.post('/admin/pannel/history/update/status',{id,status:'completed'},data=>{
+    location.reload();
+  })
+
+
+  }
+})
 
 
 </script>
