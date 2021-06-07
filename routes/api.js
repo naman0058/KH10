@@ -256,12 +256,28 @@ router.post('/save-address',(req,res)=>{
 router.post('/save-wishlist',(req,res)=>{
   let body = req.body;
   console.log('body h',req.body)
-  pool.query(`insert into wishlist set ?`,body,(err,result)=>{
+
+pool.query(`select * from wishlist where usernumber = '${req.body.usernumber}' and booking_id = '${req.body.booking_id}'`,(err,result)=>{
+  if(err) throw err;
+  else if(result[0]) {
+    pool.query(`delete from wishlist where usernumber = '${req.body.usernumber}' and booking_id = '${req.body.booking_id}'`,(err,result)=>{
+      if(err) throw err;
+      else  res.json({
+        msg : 'success'
+    })
+    })
+  }
+  else {
+    pool.query(`insert into wishlist set ?`,body,(err,result)=>{
       if(err) throw err;
       else res.json({
           msg : 'success'
       })
   })
+  }
+})
+
+ 
 })
 
 
