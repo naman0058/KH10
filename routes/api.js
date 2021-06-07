@@ -176,6 +176,7 @@ router.get('/index',(req,res)=>{
        let j = i
        let length = result.length
        let title = result[i].name
+       let image = result[i].image
        let categoryid = result[i].id
       //  let subcategoryid = result[i].subcategoryid
 
@@ -189,7 +190,7 @@ router.get('/index',(req,res)=>{
 
 
 // console.log(j)
-   data2.push({Title:title,data:response})
+   data2.push({Title:title,image,data:response})
  
     // console.log('dfgfdfffff',data2)
     // res.json(data2)
