@@ -324,7 +324,7 @@ console.log('original',productid)
 
      
      pool.query(`select s.* , 
-  (select c.quantity from cart c where c.booking_id = s.productid and c.usernumber = '${req.body.number}' and weight = s.quantity) as userquantity
+  (select c.quantity from cart c where c.booking_id = s.productid and c.usernumber = '${req.body.usernumber}' and weight = s.quantity) as userquantity
       from menu_manage s where s.productid = '${productid}' `,(err,response)=>{
          if(err) throw err;
          else {
