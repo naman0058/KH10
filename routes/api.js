@@ -6,7 +6,7 @@ var table = "category";
 const fs = require("fs");
 
 const fetch = require("node-fetch");
-const { SSL_OP_EPHEMERAL_RSA } = require("constants");
+
 
 router.post("/payment-initiate", (req, res) => {
   const url = `https://rzp_live_v8MtbgfDg2yTk1:95607TlOfi8LnbKoxWPcFMHp@api.razorpay.com/v1/orders/`;
@@ -288,32 +288,75 @@ let wishlistdata = []
 
 
 router.post('/mywishlist',(req,res)=>{
-  let body = req.body;
-  console.log('body h',req.body)
-  pool.query(`select * from wishlist where usernumber = '${req.body.number}'`,(err,result)=>{
+
+     
+  let data1 = []
+
+  
+  pool.query(`select w.*, 
+  (select s.name from services s where s.id = w.booking_id) as productname,
+  (select s.image from services s where s.id = w.booking_id) as productimage,
+  (select s.status from services s where s.id = w.booking_id) as productstatus,
+  (select s.quantity from services s where s.id = w.booking_id) as productquantity,
+  (select s.price from services s where s.id = w.booking_id) as productprice
+  
+  from wishlist w where w.usernumber = '${req.body.usernumber}'`,(err,result)=>{
       if(err) throw err;
       else {
+  //  console.log(result.length)
+  
+ for( i=0;i<result.length;i++){
+     let j = i
+     let length = result.length
+     let title = result[i].productname
+     let image = result[i].productimage
+     let status = result[i].productstatus
+     let quantity = result[i].productquantity
+     let price = result[i].productprice
+     let productid = result[i].booking_id
+     let id = result[i].booking_id
+    //  let userquantity = result[i].userquantity
+     let wishlistITem = result[i].booking_id
 
-        for(i=0;i<result.length;i++){
-   let booking_id = result[i].booking_id
-   console.log(booking_id)
+    //  let subcategoryid = result[i].subcategoryid
 
-pool.query(`select * from services where id = '${booking_id}'`,(err,response)=>{
-  if(err) throw err;
-  wishlistdata.push(response)
+console.log('original',productid)
 
-})
+     
+     pool.query(`select s.* , 
+  (select c.quantity from cart c where c.booking_id = s.productid and c.usernumber = '${req.body.number}' and weight = s.quantity) as userquantity
+      from menu_manage s where s.productid = '${productid}' `,(err,response)=>{
+         if(err) throw err;
+         else {
 
 
-        }
 
-        res.json(wishlistdata)
-        wishlistdata = []
+// console.log(j)
+wishlistdata.push({Title:title,image,status,quantity,price,id,wishlistITem,data:response})
+
+  // console.log('dfgfdfffff',data2)
+  // res.json(data2)
+
+
+
+         
+         }
+
+      //    console.log('fgy',response[0])
+         
+
+
+     })
+   
+ }
+//    console.log('finaltime',data2)
+ res.json(wishlistdata)
+ wishlistdata = []
 
       }
   })
-})
 
+})
 
 
 
