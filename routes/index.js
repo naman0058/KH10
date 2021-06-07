@@ -176,7 +176,7 @@ router.post('/get-product-details',(req,res)=>{
     
     pool.query(`select s.* ,
     (select w.booking_id from wishlist w where w.booking_id = s.id and w.usernumber = '${req.body.number}') as wishlistITem
-    from services s where s.subcategoryid = '${req.body.subcategoryid}'`,(err,result)=>{
+    from services s where s.subcategoryid = '${req.body.subcategoryid}' order by id desc`,(err,result)=>{
         if(err) throw err;
         else {
     //  console.log(result.length)
@@ -201,7 +201,7 @@ router.post('/get-product-details',(req,res)=>{
        
        pool.query(`select s.* , 
     (select c.quantity from cart c where c.booking_id = s.productid and c.usernumber = '${req.body.number}' and weight = s.quantity) as userquantity
-        from menu_manage s where s.productid = '${productid}' `,(err,response)=>{
+        from menu_manage s where s.productid = '${productid}' order by id desc `,(err,response)=>{
            if(err) throw err;
            else {
   
